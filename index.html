@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibirapuera – Tomorrow!</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3.5rem 1.5rem 4rem;
+    color: #fff;
+  }
+  .wrap { max-width: 600px; width: 100%; }
+
+  .stripes-bar { display: flex; gap: 7px; justify-content: center; margin-bottom: 2.2rem; }
+  .stripe { width: 40px; height: 5px; background: #6EFF52; }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; text-align: center;
+    color: #6EFF52; margin-bottom: 10px;
+  }
+  .headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 64px; text-align: center;
+    text-transform: uppercase; letter-spacing: -1px;
+    line-height: 0.95; color: #fff; margin-bottom: 16px;
+  }
+  .sub { text-align: center; font-size: 16px; color: #777; margin-bottom: 3rem; line-height: 1.6; }
+
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 3rem; }
+  .btn-choice {
+    padding: 22px 16px; border: 2px solid #2a2a2a;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.5px; cursor: pointer; background: transparent; color: #fff;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn-choice:hover { border-color: #6EFF52; color: #6EFF52; }
+  .btn-choice.active-run { background: #6EFF52; color: #000; border-color: #6EFF52; }
+  .btn-choice.active-chill { background: #fff; color: #000; border-color: #fff; }
+
+  .result { display: none; }
+  .result.show { display: block; }
+
+  .result-header { padding: 26px 28px 22px; }
+  .result-header.run { background: #6EFF52; }
+  .result-header.chill { background: #fff; }
+
+  .result-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+    font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .result-eyebrow.run { color: #0d3300; }
+  .result-eyebrow.chill { color: #666; }
+
+  .result-title {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 40px;
+    text-transform: uppercase; letter-spacing: -0.5px; line-height: 1; color: #000;
+  }
+  .result-desc { font-size: 14px; margin-top: 8px; font-weight: 500; line-height: 1.5; }
+  .result-desc.run { color: #0d3300; }
+  .result-desc.chill { color: #444; }
+
+  .items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #0d0d0d; margin-top: 2px; }
+  .item { background: #111; padding: 18px 16px; border-left: 3px solid transparent; }
+  .item.run { border-left-color: #6EFF52; }
+  .item.chill { border-left-color: #fff; }
+  .item-icon { font-size: 26px; display: block; margin-bottom: 8px; }
+  .item-label {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
+    text-transform: uppercase; color: #fff; display: block; margin-bottom: 4px; letter-spacing: 0.5px;
+  }
+  .item-note { font-size: 12px; color: #555; display: block; line-height: 1.4; }
+
+  .footer-note {
+    padding: 16px 28px; background: #000; border-top: 1px solid #1a1a1a;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-style: italic;
+  }
+  .footer-note.run { color: #6EFF52; opacity: 0.6; }
+  .footer-note.chill { color: #555; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="stripes-bar">
+    <div class="stripe"></div><div class="stripe"></div><div class="stripe"></div>
+  </div>
+
+  <div class="eyebrow">Ibirapuera Park — Tomorrow</div>
+  <div class="headline">Tomorrow:<br>Ibirapuera!</div>
+  <div class="sub">7am, fresh air, green grass — and one important question before you go to sleep:</div>
+
+  <div class="btn-row">
+    <button class="btn-choice" id="btn-run" onclick="show('run')">🏃 I'm running</button>
+    <button class="btn-choice" id="btn-chill" onclick="show('chill')">🌤 I'll walk / watch</button>
+  </div>
+
+  <div class="result" id="result-run">
+    <div class="result-header run">
+      <div class="result-eyebrow run">Pack tonight.</div>
+      <div class="result-title run">Athlete mode: on</div>
+      <div class="result-desc run">Pack your bag tonight. No excuses at 6:45am tomorrow.</div>
+    </div>
+    <div class="items-grid">
+      <div class="item run">
+        <span class="item-icon">🩳</span>
+        <span class="item-label">Running outfit</span>
+        <span class="item-note">Something you'd actually be proud to wear</span>
+      </div>
+      <div class="item run">
+        <span class="item-icon">🧖</span>
+        <span class="item-label">Towel</span>
+        <span class="item-note">Yes, you will sweat. No, there's no avoiding it.</span>
+      </div>
+      <div class="item run">
+        <span class="item-icon">👔</span>
+        <span class="item-label">Change of clothes</span>
+        <span class="item-note">So you don't show up to breakfast still in race mode</span>
+      </div>
+      <div class="item run">
+        <span class="item-icon">🧴</span>
+        <span class="item-label">Sunscreen</span>
+        <span class="item-note">São Paulo has sun. Surprisingly.</span>
+      </div>
+      <div class="item run">
+        <span class="item-icon">🎒</span>
+        <span class="item-label">Backpack</span>
+        <span class="item-note">To carry all of the above with dignity</span>
+      </div>
+      <div class="item run">
+        <span class="item-icon">💧</span>
+        <span class="item-label">Water bottle</span>
+        <span class="item-note">Hydration is strategy, not fussiness</span>
+      </div>
+    </div>
+    <div class="footer-note run">Pro tip: pack your bag tonight. Your 6:45am self will thank you.</div>
+  </div>
+
+  <div class="result" id="result-chill">
+    <div class="result-header chill">
+      <div class="result-eyebrow chill">Totally valid.</div>
+      <div class="result-title chill">Strategic observer mode</div>
+      <div class="result-desc chill">Also a completely valid choice. Totally.</div>
+    </div>
+    <div class="items-grid">
+      <div class="item chill">
+        <span class="item-icon">🕶</span>
+        <span class="item-label">Sunglasses</span>
+        <span class="item-note">For watching the runners with maximum elegance</span>
+      </div>
+      <div class="item chill">
+        <span class="item-icon">🧴</span>
+        <span class="item-label">Sunscreen</span>
+        <span class="item-note">You don't have to run to get burned</span>
+      </div>
+    </div>
+    <div class="footer-note chill">Mission: find a nice bench, grab a coffee, and look like you're doing field research on urban runner behaviour.</div>
+  </div>
+
+</div>
+<script>
+function show(type) {
+  document.getElementById('result-run').classList.remove('show');
+  document.getElementById('result-chill').classList.remove('show');
+  document.getElementById('btn-run').classList.remove('active-run','active-chill');
+  document.getElementById('btn-chill').classList.remove('active-run','active-chill');
+  document.getElementById('result-' + type).classList.add('show');
+  document.getElementById('btn-' + type).classList.add(type === 'run' ? 'active-run' : 'active-chill');
+}
+</script>
+</body>
+</html>
